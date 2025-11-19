@@ -12,31 +12,6 @@ $view   = filter_input(INPUT_GET, 'view') ?: 'list';
 $action = filter_input(INPUT_POST, 'action');
 
 
-if ($view === 'login') {
-    include __DIR__ . '/partials/login_form.php';
-}
-elseif ($view === 'register') {
-    include __DIR__ . '/partials/register_form.php';
-}
-elseif ($view === 'cart') {
-    include __DIR__ . '/partials/cart.php';
-}
-elseif ($view === 'checkout_success') {
-    include __DIR__ . '/partials/checkout_success.php';
-}
-elseif ($view === 'list') {
-    include __DIR__ . '/partials/records_list.php';
-}
-elseif ($view === 'create') {
-    include __DIR__ . '/partials/record_form.php';
-}
-elseif ($view === 'created') {
-    include __DIR__ . '/partials/record_created.php';
-}
-elseif ($view === 'deleted') {
-    include __DIR__ . '/partials/record_deleted.php';
-}
-
 
 function require_login(): void {
     if (empty($_SESSION['user_id'])) {
@@ -106,6 +81,7 @@ switch ($action) {
         break;
 
     case 'login':
+        //Does load and reject incorrect credentials
         $username = trim((string)($_POST['username'] ?? ''));
         $password = (string)($_POST['password'] ?? '');
 
@@ -133,6 +109,8 @@ case 'logout':
     break;
 
 case 'register':
+
+    //Register page works and logins new 
     $username  = trim((string)($_POST['username'] ?? ''));
     $full_name = trim((string)($_POST['full_name'] ?? ''));
     $password  = (string)($_POST['password'] ?? '');
@@ -207,12 +185,37 @@ if ($view === 'cart') {
     <?php include __DIR__ . '/components/nav.php'; ?>
     <br>
     <?php 
-    if ($view === 'list')        include __DIR__ . '/partials/records-list.php';
-    elseif ($view === 'create')  include __DIR__ . '/partials/record-form.php';
-    elseif ($view === 'created') include __DIR__ . '/partials/record-created.php';
-    elseif ($view === 'updated') include __DIR__ . '/partials/record-updated.php';
-    elseif ($view === 'deleted') include __DIR__ . '/partials/record-deleted.php';
-    else                         include __DIR__ . '/partials/records-list.php';
+    // if ($view === 'list')        include __DIR__ . '/partials/records-list.php';
+    // elseif ($view === 'create')  include __DIR__ . '/partials/record-form.php';
+    // elseif ($view === 'created') include __DIR__ . '/partials/record-created.php';
+    // elseif ($view === 'updated') include __DIR__ . '/partials/record-updated.php';
+    // elseif ($view === 'deleted') include __DIR__ . '/partials/record-deleted.php';
+    // else                         include __DIR__ . '/partials/records-list.php';
+
+    if ($view === 'login') {
+        include __DIR__ . '/partials/login_form.php';
+    }
+    elseif ($view === 'register') {
+        include __DIR__ . '/partials/register_form.php';
+    }
+    elseif ($view === 'cart') {
+        include __DIR__ . '/partials/cart.php';
+    }
+    elseif ($view === 'checkout_success') {
+        include __DIR__ . '/partials/checkout_success.php';
+    }
+    elseif ($view === 'list') {
+        include __DIR__ . '/partials/records-list.php';
+    }
+    elseif ($view === 'create') {
+        include __DIR__ . '/partials/record-form.php';
+    }
+    elseif ($view === 'created') {
+        include __DIR__ . '/partials/record-created.php';
+    }
+    elseif ($view === 'deleted') {
+        include __DIR__ . '/partials/record-deleted.php';
+    }
     ?>
 
 </body>
