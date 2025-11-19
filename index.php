@@ -14,7 +14,9 @@ $action = filter_input(INPUT_POST, 'action');
 
 
 function require_login(): void {
+    //check if user session exists or is empty
     if (empty($_SESSION['user_id'])) {
+        //if $_SESSION['user_id'] is not set or empty, redirect to login page
         header('Location: ?view=login');
         exit;
     }
@@ -82,11 +84,16 @@ switch ($action) {
 
     case 'login':
         //Does load and reject incorrect credentials
+
+        //trim to remove whitespace
         $username = trim((string)($_POST['username'] ?? ''));
         $password = (string)($_POST['password'] ?? '');
 
         if ($username && $password) {
+            
+            //call user_find_by_username function from functions.php-- see functions.php for details
             $user = user_find_by_username($username);
+            //verify password using password_verify
             if ($user && password_verify($password, $user['password_hash'])) {
                 $_SESSION['user_id'] = (int)$user['id'];
                 $_SESSION['full_name'] = $user['full_name'];

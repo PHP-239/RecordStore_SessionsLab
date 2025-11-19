@@ -109,6 +109,7 @@ function user_create(string $username, string $full_name, string $hash): void {
 function user_find_by_username(string $username): ?array {
     //fetch user by username
     $pdo = get_pdo();
+    // prepare and execute SQL statement to find user by username
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :u");
     $stmt->execute([':u'=>$username]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
