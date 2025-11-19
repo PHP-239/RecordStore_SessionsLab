@@ -105,25 +105,25 @@ switch ($action) {
         $view = 'updated';
         break;
 
-        case 'login':
-    $username = trim((string)($_POST['username'] ?? ''));
-    $password = (string)($_POST['password'] ?? '');
+    case 'login':
+        $username = trim((string)($_POST['username'] ?? ''));
+        $password = (string)($_POST['password'] ?? '');
 
-    if ($username && $password) {
-        $user = user_find_by_username($username);
-        if ($user && password_verify($password, $user['password_hash'])) {
-            $_SESSION['user_id'] = (int)$user['id'];
-            $_SESSION['full_name'] = $user['full_name'];
-            $view = 'list';
+        if ($username && $password) {
+            $user = user_find_by_username($username);
+            if ($user && password_verify($password, $user['password_hash'])) {
+                $_SESSION['user_id'] = (int)$user['id'];
+                $_SESSION['full_name'] = $user['full_name'];
+                $view = 'list';
+            } else {
+                $login_error = "Invalid username or password.";
+                $view = 'login';
+            }
         } else {
-            $login_error = "Invalid username or password.";
+            $login_error = "Enter both fields.";
             $view = 'login';
         }
-    } else {
-        $login_error = "Enter both fields.";
-        $view = 'login';
-    }
-    break;
+        break;
 
 case 'logout':
     $_SESSION = [];
@@ -198,7 +198,7 @@ if ($view === 'cart') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W. Viktor Gray - Record Store</title>
+    <title>W. Viktor Gray & Carlie Peters - Record Store</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/styles.css">
 </head>
