@@ -149,19 +149,23 @@ case 'add_to_cart':
 
     if ($record_id) {
         if (!isset($_SESSION['cart'])) {
+            //if not set, initialize cart as empty array
             $_SESSION['cart'] = [];
         }
+        //add record id to cart array in session
         $_SESSION['cart'][] = $record_id;
     }
     $view = 'list';
     break;
 
 case 'checkout':
+    // requires user to be logged in
     require_login();
     $cart_ids = $_SESSION['cart'] ?? [];
 
     if ($cart_ids) {
         foreach ($cart_ids as $rid) {
+            //call the purchase_create function to create a purchase record
             purchase_create((int)$_SESSION['user_id'], (int)$rid);
         }
         $_SESSION['cart'] = [];
